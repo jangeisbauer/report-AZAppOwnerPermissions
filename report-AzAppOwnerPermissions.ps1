@@ -2,6 +2,11 @@
 # author: Jan Geisbauer (@janvonkirchheim)
 # connect to AzureAD first
 
+param(
+    [string]$outputPath = ".\",
+    [string]$reportFileName = "AzAppOwnerPermissions.csv"
+)
+
 $all=@()
 $azApps = Get-AzureADApplication -All $true
 $spAll = Get-AzureADServicePrincipal -All $true 
@@ -67,4 +72,4 @@ foreach($line in $all)
         $csv+=$line.AppName + ";" + $line.AppOwner + ";"+ $p
     }
 }
-$csv | add-content -path AzAppOwnerPermissions.csv
+$csv | add-content -path $outputPath + $reportFileName
